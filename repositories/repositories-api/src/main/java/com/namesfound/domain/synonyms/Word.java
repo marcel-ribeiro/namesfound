@@ -5,9 +5,17 @@ import java.util.List;
 /**
  * @author marcel-serra.ribeiro on 13/07/2015.
  */
+
 public class Word {
   private String word;
   private List<String> synonyms;
+  private List<String> relatedWords;
+  private List<String> antonyms;
+  private List<String> nearAntonyms;
+  private List<String> idiomaticPhrases;
+  private List<String> conciseDefinitions;
+  private List<String> examples;
+  private List<String> spellingSuggestions;
 
   /**
    * Constructor with no arguments

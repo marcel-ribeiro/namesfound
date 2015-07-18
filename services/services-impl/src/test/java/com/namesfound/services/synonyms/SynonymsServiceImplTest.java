@@ -5,11 +5,13 @@ import static org.fest.assertions.Assertions.assertThat;
 import java.util.Arrays;
 import java.util.List;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 /**
  * @author marcel-serra.ribeiro on 15/07/2015.
  */
+@Ignore
 public class SynonymsServiceImplTest {
 
   private SynonymsServiceImpl synonymsServiceImpl= new SynonymsServiceImpl();

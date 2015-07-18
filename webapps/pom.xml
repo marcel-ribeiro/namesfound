@@ -19,6 +19,12 @@
             <artifactId>services-impl</artifactId>
             <version>${project.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.namesfound</groupId>
+            <artifactId>clients-impl</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
 
 </project>

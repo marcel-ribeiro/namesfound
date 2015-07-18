@@ -14,7 +14,7 @@ import org.junit.Test;
 @Ignore
 public class SynonymsServiceImplTest {
 
-  private SynonymsServiceImpl synonymsServiceImpl= new SynonymsServiceImpl();
+  private final SynonymsServiceImpl synonymsServiceImpl= new SynonymsServiceImpl();
 
   private static final String VALID_WORD = "valid";
   private static final String INVALID_WORD = "invalid";

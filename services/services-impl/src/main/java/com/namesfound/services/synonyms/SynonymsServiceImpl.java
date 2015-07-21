@@ -1,14 +1,14 @@
 package com.namesfound.services.synonyms;
 
 import com.namesfound.clients.merriamwebster.IMerriamWebsterThesaurus;
-import javax.validation.constraints.NotNull;
+import com.namesfound.domain.synonyms.Word;
 import java.util.Arrays;
 import java.util.List;
-
+import javax.validation.constraints.NotNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.namesfound.domain.synonyms.Word;
 
 /**
  * @author marcel-serra.ribeiro on 13/07/2015.
@@ -16,6 +16,7 @@ import com.namesfound.domain.synonyms.Word;
 
 @Service
 public class SynonymsServiceImpl implements ISynonymsService {
+  private static final Logger LOG = LoggerFactory.getLogger(SynonymsServiceImpl.class);
 
   @Autowired
   private IMerriamWebsterThesaurus merriamWebsterThesaurus;
@@ -36,6 +37,10 @@ public class SynonymsServiceImpl implements ISynonymsService {
 
   @Override
   public Word getWord(@NotNull String word) {
-    return merriamWebsterThesaurus.getWord(word);
+    Object theSaurusResponse = merriamWebsterThesaurus.getTheSaurus(word);
+    LOG.info("theSaurusResponse: {}, entity: {} ", theSaurusResponse, theSaurusResponse);
+
+
+    return null;
   }
 }

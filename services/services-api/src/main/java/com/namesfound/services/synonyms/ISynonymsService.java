@@ -1,12 +1,11 @@
 package com.namesfound.services.synonyms;
 
+import com.namesfound.domain.synonyms.Word;
+import com.namesfound.services.IRestServicesPath;
+import java.util.List;
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
-import java.util.List;
-
-import com.namesfound.domain.synonyms.Word;
-import com.namesfound.services.IRestServicesPath;
 
 /**
  * @author marcel-serra.ribeiro on 13/07/2015.

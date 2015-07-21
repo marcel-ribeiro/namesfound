@@ -1,12 +1,13 @@
 package com.namesfound.config;
 
-import org.springframework.context.annotation.ComponentScan;
+import com.namesfound.clients.merriamwebster.config.MerriamWebsterConfig;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 
 /**
  * @author marcel-serra.ribeiro on 18/07/2015.
  */
 @Configuration
-@ComponentScan({"com.namesfound.clients.merriamwebster"})
+@Import({ MerriamWebsterConfig.class })
 public class ClientsConfiguration {
 }

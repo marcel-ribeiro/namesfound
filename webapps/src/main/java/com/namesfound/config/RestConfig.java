@@ -1,6 +1,5 @@
 package com.namesfound.config;
 
-import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 import com.namesfound.services.IRestServicesPath;
 import com.namesfound.services.healthcheck.HealthCheck;
 import com.namesfound.services.synonyms.SynonymsServiceImpl;
@@ -29,6 +28,6 @@ public class RestConfig extends ResourceConfig {
     LOG.info("Registering the following services: {}", services);
 
     registerClasses(services);
-    register(JacksonJsonProvider.class);
+//    register(JacksonJsonProvider.class);
   }
 }

@@ -1,12 +1,15 @@
 package com.namesfound.clients.merriamwebster;
 
+import com.namesfound.clients.helpers.IClientsResponseHelper;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import org.glassfish.jersey.client.ClientConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -29,6 +32,9 @@ public class MerriamWebsterThesaurusImpl implements IMerriamWebsterThesaurus {
   @Value("${merriamwebster.key.parameter.value}")
   private String keyValue;
 
+  @Autowired
+  private IClientsResponseHelper clientsResponseHelper;
+
   //  private URI getBaseURI() {
   //    return UriBuilder.fromUri(url + responseType).build();
   //  }
@@ -45,11 +51,17 @@ public class MerriamWebsterThesaurusImpl implements IMerriamWebsterThesaurus {
 
     try {
       Response response = target.request().get();
-//          accept(MediaType.TEXT_PLAIN).get();
-//          get(Response.class);
       if (response.getStatus() != 200) {
         throw new RuntimeException("Failed : HTTP error code : " + response.getStatus());
       }
+
+      if (!clientsResponseHelper.isValidContentType(response)) {
+        LOG.info("The response from Merriam Webster has an invalid content type, therefore it's been overwritten by: {}",
+            MediaType.APPLICATION_XML_TYPE);
+        clientsResponseHelper.overrideResponseContentType(response, MediaType.APPLICATION_XML_TYPE);
+      }
+
+
       response.bufferEntity();
       String readEntity = response.readEntity(String.class);
       LOG.info(readEntity);

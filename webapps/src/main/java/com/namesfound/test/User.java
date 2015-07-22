@@ -1,32 +1,39 @@
 package com.namesfound.test;
 
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
  * @author marcel-serra.ribeiro on 18/07/2015.
  */
-@JsonAutoDetect(
-    fieldVisibility = JsonAutoDetect.Visibility.ANY // mandatory for serialization
-)
+@XmlRootElement(name = "customer")
 public class User {
+  private String firstname;
+  private String lastname;
 
-  private final String firstname;
-  private final String lastname;
-
-  @JsonCreator
-  public User(@JsonProperty("firstname") String firstname,
-      @JsonProperty("lastname") String lastname) {
+  public User(String firstname, String lastname) {
     this.firstname = firstname;
     this.lastname = lastname;
   }
 
+  public User() {
+  }
+
+  @XmlElement
   public String getFirstname() {
     return firstname;
   }
 
+  public void setFirstname(String firstname) {
+    this.firstname = firstname;
+  }
+
+  @XmlElement
   public String getLastname() {
     return lastname;
+  }
+
+  public void setLastname(String lastname) {
+    this.lastname = lastname;
   }
 }

@@ -1,15 +1,12 @@
 package com.namesfound.clients.merriamwebster;
 
-import com.namesfound.clients.helpers.IClientsResponseHelper;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import org.glassfish.jersey.client.ClientConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -31,9 +28,9 @@ public class MerriamWebsterThesaurusImpl implements IMerriamWebsterThesaurus {
 
   @Value("${merriamwebster.key.parameter.value}")
   private String keyValue;
-
-  @Autowired
-  private IClientsResponseHelper clientsResponseHelper;
+//
+//  @Autowired
+//  private IClientsResponseHelper clientsResponseHelper;
 
   //  private URI getBaseURI() {
   //    return UriBuilder.fromUri(url + responseType).build();
@@ -55,11 +52,11 @@ public class MerriamWebsterThesaurusImpl implements IMerriamWebsterThesaurus {
         throw new RuntimeException("Failed : HTTP error code : " + response.getStatus());
       }
 
-      if (!clientsResponseHelper.isValidContentType(response)) {
-        LOG.info("The response from Merriam Webster has an invalid content type, therefore it's been overwritten by: {}",
-            MediaType.APPLICATION_XML_TYPE);
-        clientsResponseHelper.overrideResponseContentType(response, MediaType.APPLICATION_XML_TYPE);
-      }
+//      if (!clientsResponseHelper.isValidContentType(response)) {
+//        LOG.info("The response from Merriam Webster has an invalid content type, therefore it's been overwritten by: {}",
+//            MediaType.APPLICATION_XML_TYPE);
+//        clientsResponseHelper.overrideResponseContentType(response, MediaType.APPLICATION_XML_TYPE);
+//      }
 
 
       response.bufferEntity();
@@ -73,6 +70,9 @@ public class MerriamWebsterThesaurusImpl implements IMerriamWebsterThesaurus {
       LOG.warn("The Merriam Webster client was not able to retrieve thesaurus with the final URL used: {}",
           target.getUri(), e);
       return null;
+    }
+    finally {
+      client.close();
     }
 
 

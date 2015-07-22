@@ -2,9 +2,9 @@ package com.namesfound.clients.helpers;
 
 import static org.fest.assertions.Assertions.assertThat;
 
-import java.util.List;
-import java.util.Map;
-import javax.ws.rs.core.*;
+import javax.ws.rs.core.HttpHeaders;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import junit.framework.TestCase;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -19,9 +19,8 @@ public class ClientsResponseHelperImplTest extends TestCase {
   @Test
   public void testIsValidContentTypeWithInvalid() throws Exception {
     //Given
-    MultivaluedMap<String, Object> headers = new MultivaluedHashMap<>();
-    headers.putSingle(HttpHeaders.CONTENT_TYPE, "invalidType");
-    Response response = getBasicResponse(headers);
+    Response response = Mockito.mock(Response.class);
+    Mockito.when(response.getHeaderString(HttpHeaders.CONTENT_TYPE)).thenReturn("invalidType");
 
     //When
     boolean isValidContentType = clientsResponseHelper.isValidContentType(response);
@@ -34,11 +33,11 @@ public class ClientsResponseHelperImplTest extends TestCase {
   @Test
   public void testIsValidContentTypeWithValid() throws Exception {
     //Given
-    MultivaluedMap<String, Object> headers = new MultivaluedHashMap<>();
-    headers.putSingle(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_XML);
-    Response response = getBasicResponse(headers);
+    Response response = Mockito.mock(Response.class);
+    Mockito.when(response.getHeaderString(HttpHeaders.CONTENT_TYPE)).thenReturn(MediaType.APPLICATION_XML);
 
     //When
+    MediaType mediaType = MediaType.valueOf(MediaType.APPLICATION_XML);
     boolean isValidContentType = clientsResponseHelper.isValidContentType(response);
 
     //Then
@@ -50,15 +49,4 @@ public class ClientsResponseHelperImplTest extends TestCase {
 
   }
 
-  private Response getBasicResponse(MultivaluedMap<String, Object> headers) {
-    Response responseMock = Mockito.mock(Response.class);
-    Mockito.when(responseMock.getHeaders()).thenReturn(headers);
-    for (Map.Entry<String, List<Object>> entry : headers.entrySet()) {
-      Mockito.when(responseMock.getHeaderString(entry.getKey())).thenReturn(entry.getValue().toString());
-    }
-
-
-
-    return responseMock;
-  }
 }

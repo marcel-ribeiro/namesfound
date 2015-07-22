@@ -4,6 +4,7 @@ import com.namesfound.services.IRestServicesPath;
 import com.namesfound.services.healthcheck.HealthCheck;
 import com.namesfound.services.synonyms.SynonymsServiceImpl;
 import com.namesfound.test.UserResource;
+import com.namesfound.test.XMLService;
 import java.util.HashSet;
 import java.util.Set;
 import javax.ws.rs.ApplicationPath;
@@ -23,6 +24,7 @@ public class RestConfig extends ResourceConfig {
     Set<Class<?>> services = new HashSet<>();
     services.add(HealthCheck.class);
     services.add(UserResource.class);
+    services.add(XMLService.class);
     services.add(SynonymsServiceImpl.class);
 
     LOG.info("Registering the following services: {}", services);

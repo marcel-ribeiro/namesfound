@@ -6,7 +6,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 /**
  * @author marcel-serra.ribeiro on 18/07/2015.
  */
-@XmlRootElement(name = "customer")
+@XmlRootElement(name = "user")
 public class User {
   private String firstname;
   private String lastname;
@@ -35,5 +35,13 @@ public class User {
 
   public void setLastname(String lastname) {
     this.lastname = lastname;
+  }
+
+  @Override
+  public String toString() {
+    return "User{" +
+        "firstname='" + firstname + '\'' +
+        ", lastname='" + lastname + '\'' +
+        '}';
   }
 }

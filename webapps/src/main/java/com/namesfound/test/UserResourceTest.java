@@ -1,18 +1,18 @@
 package com.namesfound.test;
 
+import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.namesfound.clients.merriamwebster.MerriamWebsterThesaurusImpl;
-import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.List;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.Response;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-import javax.xml.bind.Unmarshaller;
 import org.glassfish.jersey.client.ClientConfig;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 /**
  * @author marcel-serra.ribeiro on 22/07/2015.
@@ -23,10 +23,10 @@ public class UserResourceTest {
 
   public static void main(String[] args) {
     UserResourceTest userResourceTest = new UserResourceTest();
-    userResourceTest.testUserResourceClient();
+    userResourceTest.testUserResourceClientString();
   }
 
-  private void testUserResourceClient() {
+  private void testUserResourceClientString() {
     ClientConfig config = new ClientConfig();
 
     Client client = ClientBuilder.newClient(config);
@@ -47,13 +47,16 @@ public class UserResourceTest {
       }
 
       response.bufferEntity();
-      String readEntity = response.readEntity(String.class);
-      LOG.info(readEntity);
-      String output = response.getEntity().toString();
-      LOG.info(output);
+      //      String readEntity = response.readEntity(String.class);
+      InputStream readEntityInputStream = response.readEntity(InputStream.class);
+      //      LOG.info(readEntity);
+
+      List<User> users = unmarshall(readEntityInputStream);
+
+      LOG.info(users.toString());
     }
     catch (Exception e) {
-      LOG.warn("The Merriam Webster client was not able to retrieve thesaurus with the final URL used: {}",
+      LOG.warn("Not possible to retrieve the users: {}",
           target.getUri(), e);
     }
     finally {
@@ -61,23 +64,25 @@ public class UserResourceTest {
     }
   }
 
-  private void testConversion() {
-    JAXBContext jc = null;
+  private static AnnotationConfigApplicationContext getContext() {
+    AnnotationConfigApplicationContext ctx = new AnnotationConfigApplicationContext();
+    ctx.register(TestConfig.class);
+    ctx.refresh();
+    return ctx;
+  }
+
+  public static List<User> unmarshall(InputStream input) {
+    XmlMapper mapper = new XmlMapper();
+    List<User> asList = null;
     try {
-      jc = JAXBContext.newInstance(User.class);
-
-      Unmarshaller unmarshaller = jc.createUnmarshaller();
-      File xml = new File("src/forum14734741/input.xml");
-      User customer = (User) unmarshaller.unmarshal(xml);
-
-      Marshaller marshaller = jc.createMarshaller();
-      marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
-//      marshaller.setProperty(MarshallerProperties.MEDIA_TYPE, "application/json");
-//      marshaller.setProperty(MarshallerProperties.JSON_INCLUDE_ROOT, false);
-      marshaller.marshal(customer, System.out);
+      asList = mapper.readValue(input, List.class);
     }
-    catch (JAXBException e) {
+    catch (IOException e) {
       e.printStackTrace();
     }
+    LOG.info(asList.toString());
+
+    return asList;
   }
+
 }

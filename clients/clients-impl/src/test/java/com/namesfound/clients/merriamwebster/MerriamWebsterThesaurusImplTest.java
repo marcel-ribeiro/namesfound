@@ -22,7 +22,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @ContextConfiguration(classes = { MerriamWebsterConfig.class, ClientsHelpersConfig.class })
 public class MerriamWebsterThesaurusImplTest extends TestCase {
 
-  private static final String VALID_WORD = "valid";
+  private static final String VALID_WORD = "merriamwebster";
   @Autowired
   private MerriamWebsterThesaurusImpl merriamWebsterThesaurusImpl;
 
@@ -43,7 +43,7 @@ public class MerriamWebsterThesaurusImplTest extends TestCase {
   @Test
   public void testGetTheSaurus() throws Exception {
     //when
-    Object responseValid = merriamWebsterThesaurusImpl.getTheSaurus("valid");
+    Object responseValid = merriamWebsterThesaurusImpl.getTheSaurus("merriamwebster");
 
     //then
     assertThat(responseValid).isNotNull();

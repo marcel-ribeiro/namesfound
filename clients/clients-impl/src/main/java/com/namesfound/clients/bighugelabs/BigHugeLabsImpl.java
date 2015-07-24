@@ -1,12 +1,12 @@
-package com.namesfound.clients.merriamwebster;
+package com.namesfound.clients.bighugelabs;
 
+import com.namesfound.clients.bighugelabs.converter.BigHugeLabsConverter;
+import com.namesfound.clients.bighugelabs.domain.Word;
 import com.namesfound.clients.helpers.IClientsResponseHelper;
-import com.namesfound.clients.merriamwebster.converter.MerriamWebsterConverter;
 import java.io.InputStream;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import org.glassfish.jersey.client.ClientConfig;
 import org.slf4j.Logger;
@@ -19,32 +19,28 @@ import org.springframework.stereotype.Component;
  * @author marcel-serra.ribeiro on 17/07/2015.
  */
 @Component
-public class MerriamWebsterThesaurusImpl implements IMerriamWebsterThesaurus {
-  private static final Logger LOG = LoggerFactory.getLogger(MerriamWebsterThesaurusImpl.class);
+public class BigHugeLabsImpl implements IBigHugeLabs {
+  private static final Logger LOG = LoggerFactory.getLogger(BigHugeLabsImpl.class);
 
-  @Value("${merriamwebster.url}")
+  @Value("${bighugelabs.url}")
   private String url;
 
-  @Value("${merriamwebster.paths}")
+  @Value("${bighugelabs.paths}")
   private String[] paths;
 
-  @Value("${merriamwebster.key.parameter.name}")
-  private String keyName;
+  @Value("${bighugelabs.response.format}")
+  private String responseFormat;
 
-  @Value("${merriamwebster.key.parameter.value}")
+  @Value("${bighugelabs.key.value}")
   private String keyValue;
-//
+
   @Autowired
   private IClientsResponseHelper clientsResponseHelper;
 
   @Override
   public Object getTheSaurus(final String wordSearch) {
-    //final String finalUrl = url + responseType + wordSearch + key;
-
     ClientConfig config = new ClientConfig();
-
     Client client = ClientBuilder.newClient(config);
-
     WebTarget target = getWebTarget(client, wordSearch);
 
     try {
@@ -53,17 +49,10 @@ public class MerriamWebsterThesaurusImpl implements IMerriamWebsterThesaurus {
         throw new RuntimeException("Failed : HTTP error code : " + response.getStatus());
       }
 
-      if (!clientsResponseHelper.isValidContentType(response)) {
-        LOG.info("The response from Merriam Webster has an invalid content type, therefore it's been overwritten by: {}",
-            MediaType.APPLICATION_XML_TYPE);
-        clientsResponseHelper.overrideResponseContentType(response, MediaType.APPLICATION_XML_TYPE);
-      }
-
-
       response.bufferEntity();
       String readEntity = response.readEntity(String.class);
       InputStream responseInputStream = response.readEntity(InputStream.class);
-      MerriamWebsterConverter.unmarshall(responseInputStream);
+      Word word = BigHugeLabsConverter.unmarshallJSON(responseInputStream);
 
       LOG.info(readEntity);
       String output = response.getEntity().toString();
@@ -71,7 +60,7 @@ public class MerriamWebsterThesaurusImpl implements IMerriamWebsterThesaurus {
       return response;
     }
     catch (Exception e) {
-      LOG.warn("The Merriam Webster client was not able to retrieve thesaurus with the final URL used: {}",
+      LOG.warn("The BigHugeLabs client was not able to retrieve thesaurus with the final URL used: {}",
           target.getUri(), e);
       return null;
     }
@@ -92,8 +81,9 @@ public class MerriamWebsterThesaurusImpl implements IMerriamWebsterThesaurus {
     for (String path : paths) {
       target = target.path(path);
     }
+    target = target.path(keyValue);
     target = target.path(wordSearch);
-    target = target.queryParam(keyName, keyValue);
+    target = target.path(responseFormat);
     return target;
   }
 }

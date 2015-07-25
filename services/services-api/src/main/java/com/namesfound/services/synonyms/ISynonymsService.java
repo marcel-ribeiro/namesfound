@@ -1,6 +1,6 @@
 package com.namesfound.services.synonyms;
 
-import com.namesfound.domain.synonyms.Word;
+import com.namesfound.domain.synonyms.InternalWord;
 import com.namesfound.services.IRestServicesPath;
 import java.util.List;
 import javax.validation.constraints.NotNull;
@@ -24,7 +24,7 @@ public interface ISynonymsService {
 
   @GET
   @Path(IRestServicesPath.SYNONYMS_GET_WORD)
-  Word getWord(
+  InternalWord getWord(
       @PathParam(IRestServicesPath.WORD)
       @NotNull
       final String word);

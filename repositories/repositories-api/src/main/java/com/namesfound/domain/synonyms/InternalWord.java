@@ -6,7 +6,7 @@ import java.util.List;
  * @author marcel-serra.ribeiro on 13/07/2015.
  */
 
-public class Word {
+public class InternalWord {
   private String word;
   private List<String> synonyms;
   private List<String> relatedWords;
@@ -20,7 +20,7 @@ public class Word {
   /**
    * Constructor with no arguments
    */
-  public Word() {
+  public InternalWord() {
   }
 
   /**
@@ -29,7 +29,7 @@ public class Word {
    * @param word the word
    * @param synonyms the list of synonyms
    */
-  public Word(String word, List<String> synonyms) {
+  public InternalWord(String word, List<String> synonyms) {
     this.word = word;
     this.synonyms = synonyms;
   }

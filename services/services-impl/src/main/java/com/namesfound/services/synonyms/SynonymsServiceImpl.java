@@ -1,7 +1,7 @@
 package com.namesfound.services.synonyms;
 
-import com.namesfound.clients.merriamwebster.IMerriamWebsterThesaurus;
-import com.namesfound.domain.synonyms.Word;
+import com.namesfound.clients.ITheSaurusClient;
+import com.namesfound.domain.synonyms.InternalWord;
 import java.util.Arrays;
 import java.util.List;
 import javax.validation.constraints.NotNull;
@@ -19,24 +19,25 @@ public class SynonymsServiceImpl implements ISynonymsService {
   private static final Logger LOGGER = LoggerFactory.getLogger(SynonymsServiceImpl.class);
 
   @Autowired
-  private IMerriamWebsterThesaurus merriamWebsterThesaurus;
+  private ITheSaurusClient merriamWebsterThesaurus;
 
   @Override
-  public List<String> getSynonyms(@NotNull String word) {
+  public List<String> getSynonyms(
+      @NotNull
+      String word)
+  {
     List<String> synonyms = null;
     //TODO: Check if the word is registered in the server and return its synonyms
     //for the sake of tests lets assume the word is action
-    if(word.equalsIgnoreCase("valid")){
-      synonyms = Arrays
-          .asList("right", "genuine", "accurate", "credible", "good");
+    if (word.equalsIgnoreCase("valid")) {
+      synonyms = Arrays.asList("right", "genuine", "accurate", "credible", "good");
     }
-
 
     return synonyms;
   }
 
   @Override
-  public Word getWord(@NotNull String word) {
+  public InternalWord getWord(@NotNull String word) {
     Object theSaurusResponse = merriamWebsterThesaurus.getTheSaurus(word);
     LOGGER.info("theSaurusResponse: {}, entity: {} ", theSaurusResponse, theSaurusResponse);
 

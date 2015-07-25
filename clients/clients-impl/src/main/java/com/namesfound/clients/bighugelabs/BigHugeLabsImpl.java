@@ -1,5 +1,6 @@
 package com.namesfound.clients.bighugelabs;
 
+import com.namesfound.clients.ITheSaurusClient;
 import com.namesfound.clients.bighugelabs.converter.BigHugeLabsConverter;
 import com.namesfound.clients.bighugelabs.domain.Word;
 import com.namesfound.clients.helpers.IClientsResponseHelper;
@@ -19,7 +20,7 @@ import org.springframework.stereotype.Component;
  * @author marcel-serra.ribeiro on 17/07/2015.
  */
 @Component
-public class BigHugeLabsImpl implements IBigHugeLabs {
+public class BigHugeLabsImpl implements ITheSaurusClient {
   private static final Logger LOGGER = LoggerFactory.getLogger(BigHugeLabsImpl.class);
 
   @Value("${bighugelabs.url}")
@@ -38,7 +39,7 @@ public class BigHugeLabsImpl implements IBigHugeLabs {
   private IClientsResponseHelper clientsResponseHelper;
 
   @Override
-  public Object getTheSaurus(final String wordSearch) {
+  public Word getTheSaurus(final String wordSearch) {
     ClientConfig config = new ClientConfig();
     Client client = ClientBuilder.newClient(config);
     WebTarget target = getWebTarget(client, wordSearch);
@@ -57,7 +58,7 @@ public class BigHugeLabsImpl implements IBigHugeLabs {
       LOGGER.info(readEntity);
       String output = response.getEntity().toString();
       LOGGER.info(output);
-      return response;
+      return word;
     }
     catch (Exception e) {
       LOGGER.warn("The BigHugeLabs client was not able to retrieve thesaurus with the final URL used: {}", target.getUri(),

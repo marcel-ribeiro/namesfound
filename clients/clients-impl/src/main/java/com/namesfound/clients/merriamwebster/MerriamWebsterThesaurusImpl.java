@@ -1,5 +1,7 @@
 package com.namesfound.clients.merriamwebster;
 
+import com.namesfound.clients.ITheSaurusClient;
+import com.namesfound.clients.bighugelabs.domain.Word;
 import com.namesfound.clients.helpers.IClientsResponseHelper;
 import com.namesfound.clients.merriamwebster.converter.MerriamWebsterConverter;
 import java.io.InputStream;
@@ -19,7 +21,7 @@ import org.springframework.stereotype.Component;
  * @author marcel-serra.ribeiro on 17/07/2015.
  */
 @Component
-public class MerriamWebsterThesaurusImpl implements IMerriamWebsterThesaurus {
+public class MerriamWebsterThesaurusImpl implements ITheSaurusClient {
   private static final Logger LOGGER = LoggerFactory.getLogger(MerriamWebsterThesaurusImpl.class);
 
   @Value("${merriamwebster.url}")
@@ -38,7 +40,7 @@ public class MerriamWebsterThesaurusImpl implements IMerriamWebsterThesaurus {
   private IClientsResponseHelper clientsResponseHelper;
 
   @Override
-  public Object getTheSaurus(final String wordSearch) {
+  public Word getTheSaurus(final String wordSearch) {
     //final String finalUrl = url + responseType + wordSearch + key;
 
     ClientConfig config = new ClientConfig();
@@ -69,7 +71,7 @@ public class MerriamWebsterThesaurusImpl implements IMerriamWebsterThesaurus {
       LOGGER.info(readEntity);
       String output = response.getEntity().toString();
       LOGGER.info(output);
-      return response;
+      return null;
     }
     catch (Exception e) {
       LOGGER.warn("The Merriam Webster client was not able to retrieve thesaurus with the final URL used: {}",

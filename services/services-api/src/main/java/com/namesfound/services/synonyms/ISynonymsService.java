@@ -17,11 +17,17 @@ public interface ISynonymsService {
 
   @GET
   @Path(IRestServicesPath.SYNONYMS_GET_SYNONYMS)
-  public List<String> getSynonyms(@PathParam(IRestServicesPath.WORD) @NotNull final String word);
+  List<String> getSynonyms(
+      @PathParam(IRestServicesPath.WORD)
+      @NotNull
+      final String word);
 
   @GET
   @Path(IRestServicesPath.SYNONYMS_GET_WORD)
-  public Word getWord(@PathParam(IRestServicesPath.WORD) @NotNull final String word);
+  Word getWord(
+      @PathParam(IRestServicesPath.WORD)
+      @NotNull
+      final String word);
 
 
 }

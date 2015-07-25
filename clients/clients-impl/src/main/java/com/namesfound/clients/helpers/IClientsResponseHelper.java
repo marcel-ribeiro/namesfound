@@ -11,17 +11,17 @@ public interface IClientsResponseHelper {
   /**
    * Helper method that checks whether the media type is valid or not
    *
-   * @param response
+   * @param response response
    * @return boolean
    */
-  public boolean isValidContentType(Response response);
+  boolean isValidContentType(Response response);
 
   /**
    * Helper method that facilitates overriding the media type on the response
    * To be used mostly when the service provides an invalid content type
    *
-   * @param response
-   * @param mediaType
+   * @param response response
+   * @param mediaType media type
    */
-  public void overrideResponseContentType(Response response, MediaType mediaType);
+  void overrideResponseContentType(Response response, MediaType mediaType);
 }

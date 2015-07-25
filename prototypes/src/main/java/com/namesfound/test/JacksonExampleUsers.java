@@ -28,7 +28,7 @@ public class JacksonExampleUsers {
 
   }
 
-  private static void jacksonJsonMarshall() throws JsonParseException, JsonMappingException, IOException
+  private static void jacksonJsonMarshall() throws IOException
   {
     ObjectMapper mapper = new ObjectMapper();
 
@@ -39,7 +39,7 @@ public class JacksonExampleUsers {
 
   }
 
-  private static void jacksonXmlMarshall() throws JsonParseException, JsonMappingException, IOException
+  private static void jacksonXmlMarshall() throws IOException
   {
 //    ObjectMapper mapper = new ObjectMapper();
     XmlMapper mapper = new XmlMapper();

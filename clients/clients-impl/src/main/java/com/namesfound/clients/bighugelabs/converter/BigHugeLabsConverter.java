@@ -11,18 +11,18 @@ import org.slf4j.LoggerFactory;
  * @author marcel-serra.ribeiro on 23/07/2015.
  */
 public class BigHugeLabsConverter {
-  private static final Logger LOG = LoggerFactory.getLogger(BigHugeLabsConverter.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(BigHugeLabsConverter.class);
 
   public static Word unmarshallJSON(InputStream input) {
     ObjectMapper mapper = new ObjectMapper();
     Word result = null;
     try {
       result = mapper.readValue(input, Word.class);
+      LOGGER.info(result.toString());
     }
     catch (IOException e) {
       e.printStackTrace();
     }
-    LOG.info(result.toString());
 
     return result;
   }

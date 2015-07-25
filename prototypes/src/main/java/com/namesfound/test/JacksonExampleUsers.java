@@ -14,7 +14,7 @@ import org.slf4j.LoggerFactory;
  * @author marcel-serra.ribeiro on 23/07/2015.
  */
 public class JacksonExampleUsers {
-  private static final Logger LOG = LoggerFactory.getLogger(JacksonExampleUsers.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(JacksonExampleUsers.class);
 
   public static void main(String[] args) {
 
@@ -46,10 +46,10 @@ public class JacksonExampleUsers {
 
     List<User> listOfDtos = Lists.newArrayList(new User("John", "Doo"), new User("Mike", "Ross"));
     String jsonArray = mapper.writeValueAsString(listOfDtos);
-    LOG.info(jsonArray);
+    LOGGER.info(jsonArray);
 
     List<User> asList = mapper.readValue(jsonArray, List.class);
-    LOG.info(asList.toString());
+    LOGGER.info(asList.toString());
 
   }
 

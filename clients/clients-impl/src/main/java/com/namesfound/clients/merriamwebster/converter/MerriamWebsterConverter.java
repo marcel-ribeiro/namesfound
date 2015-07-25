@@ -10,18 +10,18 @@ import org.slf4j.LoggerFactory;
  * @author marcel-serra.ribeiro on 23/07/2015.
  */
 public class MerriamWebsterConverter {
-  private static final Logger LOG = LoggerFactory.getLogger(MerriamWebsterConverter.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(MerriamWebsterConverter.class);
 
   public static Object unmarshall(InputStream input) {
     XmlMapper mapper = new XmlMapper();
     Object result = null;
     try {
       result = mapper.readValue(input, Object.class);
+      LOGGER.info(result.toString());
     }
     catch (IOException e) {
       e.printStackTrace();
     }
-    LOG.info(result.toString());
 
     return result;
   }

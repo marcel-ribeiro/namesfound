@@ -1,7 +1,6 @@
 package com.namesfound.test;
 
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
-import com.namesfound.clients.merriamwebster.MerriamWebsterThesaurusImpl;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
@@ -18,8 +17,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
  * @author marcel-serra.ribeiro on 22/07/2015.
  */
 public class UserResourceTest {
-
-  private static final Logger LOG = LoggerFactory.getLogger(MerriamWebsterThesaurusImpl.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(UserResourceTest.class);
 
   public static void main(String[] args) {
     UserResourceTest userResourceTest = new UserResourceTest();
@@ -53,10 +51,10 @@ public class UserResourceTest {
 
       List<User> users = unmarshall(readEntityInputStream);
 
-      LOG.info(users.toString());
+      LOGGER.info(users.toString());
     }
     catch (Exception e) {
-      LOG.warn("Not possible to retrieve the users: {}",
+      LOGGER.warn("Not possible to retrieve the users: {}",
           target.getUri(), e);
     }
     finally {
@@ -80,7 +78,7 @@ public class UserResourceTest {
     catch (IOException e) {
       e.printStackTrace();
     }
-    LOG.info(asList.toString());
+    LOGGER.info(asList.toString());
 
     return asList;
   }

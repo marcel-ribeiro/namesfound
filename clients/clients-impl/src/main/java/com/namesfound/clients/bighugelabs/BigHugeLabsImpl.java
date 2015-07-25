@@ -20,7 +20,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class BigHugeLabsImpl implements IBigHugeLabs {
-  private static final Logger LOG = LoggerFactory.getLogger(BigHugeLabsImpl.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(BigHugeLabsImpl.class);
 
   @Value("${bighugelabs.url}")
   private String url;
@@ -54,14 +54,14 @@ public class BigHugeLabsImpl implements IBigHugeLabs {
       InputStream responseInputStream = response.readEntity(InputStream.class);
       Word word = BigHugeLabsConverter.unmarshallJSON(responseInputStream);
 
-      LOG.info(readEntity);
+      LOGGER.info(readEntity);
       String output = response.getEntity().toString();
-      LOG.info(output);
+      LOGGER.info(output);
       return response;
     }
     catch (Exception e) {
-      LOG.warn("The BigHugeLabs client was not able to retrieve thesaurus with the final URL used: {}",
-          target.getUri(), e);
+      LOGGER.warn("The BigHugeLabs client was not able to retrieve thesaurus with the final URL used: {}", target.getUri(),
+          e);
       return null;
     }
     finally {

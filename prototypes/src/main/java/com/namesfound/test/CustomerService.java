@@ -12,7 +12,7 @@ import javax.ws.rs.core.MediaType;
  * http://localhost:8080/namesfound/rest/xml/customer/999
  */
 @Path("/xml/customer")
-public class XMLService {
+public class CustomerService {
 
   @GET
   @Path("/{pin}")

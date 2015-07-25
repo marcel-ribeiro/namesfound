@@ -2,43 +2,46 @@ package com.namesfound.clients.bighugelabs;
 
 import static org.fest.assertions.Assertions.assertThat;
 
-import com.namesfound.clients.bighugelabs.config.BigHugeLabsConfig;
-import com.namesfound.clients.helpers.config.ClientsHelpersConfig;
 import java.net.URI;
 import java.net.URISyntaxException;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.mockito.InjectMocks;
+import org.mockito.runners.MockitoJUnitRunner;
+import org.springframework.test.util.ReflectionTestUtils;
 
 /**
  * @author marcel-serra.ribeiro on 24/07/2015.
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = { BigHugeLabsConfig.class, ClientsHelpersConfig.class })
+@RunWith(MockitoJUnitRunner.class)
 public class BigHugeLabsImplTest {
   private static final String VALID_WORD = "love";
+  private static final String URL = "http://someurl.com";
+  private static final String PATH1 = "path1";
+  private static final String PATH2 = "path2";
+  private static final String[] PATHS = new String[] { PATH1, PATH2 };
+  private static final String KEY_VALUE = "KEY123";
+  private static final String RESPONSE_FORMAT = "json";
 
-  @Autowired
-  private BigHugeLabsImpl bigHugeLabsImpl;
+  @InjectMocks
+  private BigHugeLabsImpl bigHugeLabsImpl = new BigHugeLabsImpl();
 
-  @Test
-  public void testGetTheSaurus() throws Exception {
-    // When
-    Object responseValid = bigHugeLabsImpl.getTheSaurus(VALID_WORD);
-
-    // Then
-    assertThat(responseValid).isNotNull();
+  @Before
+  public void setup() {
+    ReflectionTestUtils.setField(bigHugeLabsImpl, "url", URL);
+    ReflectionTestUtils.setField(bigHugeLabsImpl, "paths", PATHS);
+    ReflectionTestUtils.setField(bigHugeLabsImpl, "keyValue", KEY_VALUE);
+    ReflectionTestUtils.setField(bigHugeLabsImpl, "responseFormat", RESPONSE_FORMAT);
   }
 
   @Test
   public void testGetWebTarget() throws URISyntaxException {
     // Given
-    String expectedUrl = "http://words.bighugelabs.com/api/2/d4c201de8f6a7b05e5da536876432cdf/"+VALID_WORD+"/json";
+    String expectedUrl = URL + "/" + PATH1 + "/" + PATH2 + "/" + KEY_VALUE + "/" + VALID_WORD + "/" + RESPONSE_FORMAT;
     Client client = ClientBuilder.newClient();
     URI expectedTargetUri = new URI(expectedUrl);
 
@@ -50,4 +53,6 @@ public class BigHugeLabsImplTest {
     assertThat(webTarget.getUri()).isEqualTo(expectedTargetUri);
 
   }
+
+
 }

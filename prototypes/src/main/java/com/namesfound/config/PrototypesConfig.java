@@ -9,5 +9,5 @@ import org.springframework.context.annotation.Import;
  */
 @Configuration
 @Import({ TestConfig.class })
-public class SpringConfig {
+public class PrototypesConfig {
 }

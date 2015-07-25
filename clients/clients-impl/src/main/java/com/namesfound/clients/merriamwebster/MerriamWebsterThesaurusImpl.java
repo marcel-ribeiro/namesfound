@@ -20,7 +20,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class MerriamWebsterThesaurusImpl implements IMerriamWebsterThesaurus {
-  private static final Logger LOG = LoggerFactory.getLogger(MerriamWebsterThesaurusImpl.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(MerriamWebsterThesaurusImpl.class);
 
   @Value("${merriamwebster.url}")
   private String url;
@@ -54,7 +54,8 @@ public class MerriamWebsterThesaurusImpl implements IMerriamWebsterThesaurus {
       }
 
       if (!clientsResponseHelper.isValidContentType(response)) {
-        LOG.info("The response from Merriam Webster has an invalid content type, therefore it's been overwritten by: {}",
+        LOGGER.info(
+            "The response from Merriam Webster has an invalid content type, therefore it's been overwritten by: {}",
             MediaType.APPLICATION_XML_TYPE);
         clientsResponseHelper.overrideResponseContentType(response, MediaType.APPLICATION_XML_TYPE);
       }
@@ -65,13 +66,13 @@ public class MerriamWebsterThesaurusImpl implements IMerriamWebsterThesaurus {
       InputStream responseInputStream = response.readEntity(InputStream.class);
       MerriamWebsterConverter.unmarshall(responseInputStream);
 
-      LOG.info(readEntity);
+      LOGGER.info(readEntity);
       String output = response.getEntity().toString();
-      LOG.info(output);
+      LOGGER.info(output);
       return response;
     }
     catch (Exception e) {
-      LOG.warn("The Merriam Webster client was not able to retrieve thesaurus with the final URL used: {}",
+      LOGGER.warn("The Merriam Webster client was not able to retrieve thesaurus with the final URL used: {}",
           target.getUri(), e);
       return null;
     }

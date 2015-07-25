@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class SynonymsServiceImpl implements ISynonymsService {
-  private static final Logger LOG = LoggerFactory.getLogger(SynonymsServiceImpl.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(SynonymsServiceImpl.class);
 
   @Autowired
   private IMerriamWebsterThesaurus merriamWebsterThesaurus;
@@ -38,7 +38,7 @@ public class SynonymsServiceImpl implements ISynonymsService {
   @Override
   public Word getWord(@NotNull String word) {
     Object theSaurusResponse = merriamWebsterThesaurus.getTheSaurus(word);
-    LOG.info("theSaurusResponse: {}, entity: {} ", theSaurusResponse, theSaurusResponse);
+    LOGGER.info("theSaurusResponse: {}, entity: {} ", theSaurusResponse, theSaurusResponse);
 
 
     return null;

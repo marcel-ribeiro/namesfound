@@ -13,6 +13,7 @@
         <module>services</module>
         <module>webapps</module>
         <module>clients</module>
+        <module>prototypes</module>
     </modules>
 
 

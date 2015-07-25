@@ -1,10 +1,7 @@
 package com.namesfound.clients.bighugelabs;
 
-import static org.fest.assertions.Assertions.assertThat;
-
 import com.namesfound.clients.bighugelabs.config.BigHugeLabsConfig;
 import com.namesfound.clients.helpers.config.ClientsHelpersConfig;
-import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -15,19 +12,12 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = { BigHugeLabsConfig.class, ClientsHelpersConfig.class })
-public class BigHugeLabsILTest {
+public class BigHugeLabsISTest {
   private static final String VALID_WORD = "love";
 
   @Autowired
   private BigHugeLabsImpl bigHugeLabsImpl;
 
-  @Test
-  public void testGetTheSaurus() throws Exception {
-    // When
-    Object responseValid = bigHugeLabsImpl.getTheSaurus(VALID_WORD);
 
-    // Then
-    assertThat(responseValid).isNotNull();
-  }
 
 }
